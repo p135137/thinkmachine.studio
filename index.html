@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>thinkmachine.studio</title>
+    <style>
+        body {
+            background: #fff;
+            color: #000;
+            font-family: serif;
+            margin: 1.2em;
+        }
+        a { color: #00f; }
+
+        header {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-top: 0;
+        }
+
+        .nav {
+            /* Inherits center alignment from header */
+        }
+
+        .nav a.active {
+            color: purple;
+        }
+
+        hr.nav-rule {
+            border: none;
+            border-top: 1px solid #000;
+            margin: 1.5em 0;
+        }
+
+        main, .footer-wrap {
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 1.17em;
+        }
+
+        hr.footer-rule {
+            border: none;
+            border-top: 1px solid #000;
+            margin: 4em 0 1.5em 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>thinkmachine.studio</h1>
+
+        <p class="nav">
+            [<a href="#projects">Projects</a>]
+            [<a href="#about">About</a>]
+            [<a href="#contact">Contact</a>]
+            [<a href="#donate">Donate</a>]
+        </p>
+    </header>
+
+    <hr class="nav-rule">
+
+    <main>
+        <div id="projects" class="page active">
+            <h2>Projects</h2>
+            <p><a href="https://yardsale.exchange/">yardsale.exchange</a> – Local classifieds on Nostr</p>
+        </div>
+
+        <div id="about" class="page">
+            <h2>About</h2>
+            <p>A simple project directory.</p>
+        </div>
+
+        <div id="contact" class="page">
+            <h2>Contact</h2>
+            <p>Email: <a href="mailto:hello@thinkmachine.studio">hello@thinkmachine.studio</a></p>
+        </div>
+
+        <div id="donate" class="page">
+            <h2>Donate</h2>
+            <p>If you find this useful, consider supporting.</p>
+        </div>
+    </main>
+
+    <div class="footer-wrap">
+        <hr class="footer-rule">
+        <p>Last updated on Tuesday, July 7, 2026 at 12:00 UTC</p>
+    </div>
+
+    <script>
+        function showPage() {
+            var id = window.location.hash.slice(1) || 'projects';
+            document.querySelectorAll('.page').forEach(function(el) {
+                el.classList.remove('active');
+            });
+            var target = document.getElementById(id);
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('.nav a').forEach(function(link) {
+                link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+            });
+        }
+        window.addEventListener('hashchange', showPage);
+        window.addEventListener('DOMContentLoaded', showPage);
+    </script>
+
+</body>
+</html>
