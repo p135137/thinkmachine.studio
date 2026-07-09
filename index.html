@@ -57,18 +57,59 @@
             border-top: 1px solid #000;
             margin: 4em 0 1.5em 0;
         }
+
+        /* Minimal shop/form styles */
+        input, select, button {
+            font-family: inherit;
+            font-size: 1em;
+        }
+        label {
+            display: block;
+            margin: 0.6em 0 0.2em 0;
+        }
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            max-width: 280px;
+            padding: 0.3em;
+            border: 1px solid #000;
+            background: #fff;
+            color: #000;
+        }
+        button[type="submit"] {
+            margin-top: 1em;
+            padding: 0.5em 1.2em;
+            border: 1px solid #000;
+            background: #fff;
+            color: #000;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background: #000;
+            color: #fff;
+        }
+        .product-img {
+            max-width: 200px;
+            border: 1px solid #000;
+            display: block;
+            margin-bottom: 1em;
+        }
+        small {
+            font-size: 0.85em;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>thinkmachine.studio</h1>
+        <h1>[ thinkmachine.studio ]</h1>
 
         <p class="nav">
-            [<a href="#projects">Projects</a>]
-            [<a href="#about">About</a>]
-            [<a href="#contact">Contact</a>]
-            [<a href="#donate">Donate</a>]
+            [<a href="#projects">projects</a>]
+            [<a href="#about">about</a>]
+            [<a href="#contact">contact</a>]
+            [<a href="#shop">shop</a>]
         </p>
     </header>
 
@@ -76,29 +117,83 @@
 
     <main>
         <div id="projects" class="page active">
-            <h2>Projects</h2>
+            <h2>projects</h2>
             <p><a href="https://yardsale.exchange/">yardsale.exchange</a> – Local classifieds on Nostr</p>
         </div>
 
         <div id="about" class="page">
-            <h2>About</h2>
-            <p>A place for my ideas.</p>
+            <h2>about</h2>
+            <p>A simple project directory.</p>
         </div>
 
         <div id="contact" class="page">
-            <h2>Contact</h2>
-            <p>Email: <a href="mailto:hello@thinkmachine.studio">hello@thinkmachine.studio</a></p>Nostr: pat@primal.net
+            <h2>contact</h2>
+            <p>Email: <a href="mailto:hello@thinkmachine.studio">hello@thinkmachine.studio</a></p>
         </div>
 
-        <div id="donate" class="page">
-            <h2>Donate</h2>
-            <p>If you find this useful, consider supporting.</p>
+        <div id="shop" class="page">
+            <h2>shop</h2>
+
+            <!-- Replace src with the path to your uploaded t-shirt image -->
+            <img src="tshirt.jpg" alt="thinkmachine.studio t-shirt" class="product-img">
+
+            <p><strong>thinkmachine.studio tee</strong></p>
+            <p>\$25.00 — BTC only via BTCPay Server</p>
+
+            <!-- BTCPay Server Pay Button integration -->
+            <form id="shop-form" action="https://YOUR_BTCPAY_SERVER/api/v1/invoices" method="POST">
+                <!-- Required BTCPay fields -->
+                <input type="hidden" name="storeId" value="YOUR_STORE_ID">
+                <input type="hidden" name="price" value="25.00">
+                <input type="hidden" name="currency" value="USD">
+                <input type="hidden" name="itemDesc" value="thinkmachine.studio t-shirt">
+                <input type="hidden" name="checkoutDesc" id="checkoutDesc" value="">
+                <input type="hidden" name="orderId" id="orderId" value="">
+
+                <label for="size">size</label>
+                <select id="size" name="size" required>
+                    <option value="">-- select size --</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                    <option value="XXL">XXL</option>
+                </select>
+
+                <h3>shipping details</h3>
+
+                <label for="ship-name">full name</label>
+                <input type="text" id="ship-name" name="shipping_name" required>
+
+                <label for="ship-email">email</label>
+                <input type="email" id="ship-email" name="shipping_email" required>
+
+                <label for="ship-address">street address</label>
+                <input type="text" id="ship-address" name="shipping_address" required>
+
+                <label for="ship-city">city</label>
+                <input type="text" id="ship-city" name="shipping_city" required>
+
+                <label for="ship-state">state / province</label>
+                <input type="text" id="ship-state" name="shipping_state" required>
+
+                <label for="ship-zip">zip / postal code</label>
+                <input type="text" id="ship-zip" name="shipping_zip" required>
+
+                <label for="ship-country">country</label>
+                <input type="text" id="ship-country" name="shipping_country" required>
+
+                <p>
+                    <button type="submit">pay with btcpayserver</button>
+                </p>
+                <p><small>Update the form <code>action</code> and <code>storeId</code> fields above to connect your BTCPay Server instance.</small></p>
+            </form>
         </div>
     </main>
 
     <div class="footer-wrap">
         <hr class="footer-rule">
-        <p>Last updated on Tuesday, July 7, 2026 at 12:00 UTC</p>
+        <p id="last-updated"></p>
     </div>
 
     <script>
@@ -116,6 +211,56 @@
         }
         window.addEventListener('hashchange', showPage);
         window.addEventListener('DOMContentLoaded', showPage);
+
+        // 1) Auto-updating last-modified date
+        function updateFooterDate() {
+            var p = document.getElementById('last-updated');
+            if (!p) return;
+            var d = new Date(document.lastModified);
+            if (isNaN(d.getTime())) {
+                p.textContent = 'Last updated: ' + document.lastModified;
+                return;
+            }
+            var opts = {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+            };
+            p.textContent = 'Last updated on ' + d.toLocaleString('en-US', opts);
+        }
+        updateFooterDate();
+
+        // 3) Pack shipping details into the BTCPay invoice before submission
+        document.getElementById('shop-form').addEventListener('submit', function(e) {
+            var size = document.getElementById('size').value;
+            if (!size) {
+                alert('Please select a size.');
+                e.preventDefault();
+                return;
+            }
+
+            var name = document.getElementById('ship-name').value.trim();
+            var email = document.getElementById('ship-email').value.trim();
+            var addr = document.getElementById('ship-address').value.trim();
+            var city = document.getElementById('ship-city').value.trim();
+            var state = document.getElementById('ship-state').value.trim();
+            var zip = document.getElementById('ship-zip').value.trim();
+            var country = document.getElementById('ship-country').value.trim();
+
+            var desc = 'Size: ' + size + '. ' +
+                       'Ship to: ' + name + ' <' + email + '>, ' +
+                       addr + ', ' + city + ', ' + state + ' ' + zip + ', ' + country;
+
+            document.getElementById('checkoutDesc').value = desc;
+            document.getElementById('orderId').value = 'TSHIRT-' + Date.now();
+
+            // Safety check so it doesn't submit until configured
+            var action = this.getAttribute('action');
+            var storeId = this.querySelector('input[name="storeId"]').value;
+            if (action.indexOf('YOUR_BTCPAY_SERVER') !== -1 || storeId.indexOf('YOUR_STORE_ID') !== -1) {
+                alert('BTCPay Server is not configured yet. Please update the form action and storeId in the HTML.');
+                e.preventDefault();
+            }
+        });
     </script>
 
 </body>
