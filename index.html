@@ -1,278 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>thinkmachine.studio</title>
-   <style>
-       body {
-           background: #fff;
-           color: #000;
-           font-family: serif;
-           margin: 1.2em;
-       }
-       a { color: #00f; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>thinkmachine.studio</title>
+  <style>
+      body {
+          background: #fff;
+          color: #000;
+          font-family: serif;
+          margin: 1.2em;
+      }
+      a { color: #00f; }
 
-       header {
-           text-align: center;
-       }
+      header {
+          text-align: center;
+      }
 
-       h1 {
-           font-size: 1.5em;
-           margin-top: 0;
-       }
+      h1 {
+          font-size: 1.5em;
+          margin-top: 0;
+      }
 
-       .nav {
-           /* Inherits center alignment from header */
-       }
+      .nav {
+          /* Inherits center alignment from header */
+      }
 
-       .nav a.active {
-           color: purple;
-       }
+      .nav a.active {
+          color: purple;
+      }
 
-       hr.nav-rule {
-           border: none;
-           border-top: 1px solid #000;
-           margin: 1.5em 0;
-       }
+      hr.nav-rule {
+          border: none;
+          border-top: 1px solid #000;
+          margin: 1.5em 0;
+      }
 
-       main, .footer-wrap {
-           max-width: 600px;
-           text-align: left;
-       }
+      main, .footer-wrap {
+          max-width: 600px;
+          text-align: left;
+      }
 
-       .page {
-           display: none;
-       }
-       .page.active {
-           display: block;
-       }
+      .page {
+          display: none;
+      }
+      .page.active {
+          display: block;
+      }
 
-       h2 {
-           font-size: 1.17em;
-       }
+      h2 {
+          font-size: 1.17em;
+      }
 
-       hr.footer-rule {
-           border: none;
-           border-top: 1px solid #000;
-           margin: 4em 0 1.5em 0;
-       }
+      hr.footer-rule {
+          border: none;
+          border-top: 1px solid #000;
+          margin: 4em 0 1.5em 0;
+      }
 
-       /* Product card styles */
-       .product-card {
-           border: 1px solid #000;
-           padding: 1em;
-           max-width: 320px;
-           cursor: pointer;
-       }
-       .card-meta p {
-           margin: 0.2em 0;
-       }
-       .card-hint {
-           font-size: 0.85em;
-           color: #333;
-           text-decoration: underline;
-       }
-       .card-body {
-           display: none;
-           margin-top: 1em;
-           padding-top: 1em;
-           border-top: 1px solid #000;
-       }
-       .product-card.expanded .card-body {
-           display: block;
-       }
-       .product-card.expanded .card-hint {
-           display: none;
-       }
+      /* Product card styles */
+      .product-card {
+          border: 1px solid #000;
+          padding: 1em;
+          max-width: 320px;
+          cursor: pointer;
+      }
+      .card-preview img,
+      .card-body img {
+          width: 100%;
+          height: auto;
+          display: block;
+          margin-bottom: 0.5em;
+      }
+      .card-meta p {
+          margin: 0.2em 0;
+      }
+      .card-hint {
+          font-size: 0.85em;
+          color: #333;
+          text-decoration: underline;
+      }
+      .card-body {
+          display: none;
+          margin-top: 1em;
+          padding-top: 1em;
+          border-top: 1px solid #000;
+      }
+      .product-card.expanded .card-body {
+          display: block;
+      }
+      .product-card.expanded .card-hint {
+          display: none;
+      }
 
-       /* T-Shirt Mockup Styles */
-       .mockup-wrap {
-           display: flex;
-           justify-content: center;
-           align-items: flex-start;
-           height: 260px;
-           overflow: hidden;
-           margin-bottom: 0.5em;
-       }
-       .tshirt {
-           width: 420px;
-           height: 520px;
-           background: #ececec;
-           border-radius: 18px 18px 10px 10px;
-           position: relative;
-           box-shadow: 0 8px 30px rgba(0,0,0,.12);
-           transform: scale(0.5);
-           transform-origin: top center;
-           flex-shrink: 0;
-       }
-       /* Sleeves */
-       .tshirt::before,
-       .tshirt::after {
-           content: "";
-           position: absolute;
-           top: 70px;
-           width: 110px;
-           height: 140px;
-           background: #ececec;
-           border-radius: 20px;
-       }
-       .tshirt::before {
-           left: -70px;
-           transform: rotate(18deg);
-       }
-       .tshirt::after {
-           right: -70px;
-           transform: rotate(-18deg);
-       }
-       /* Collar */
-       .collar {
-           position: absolute;
-           top: 18px;
-           left: 50%;
-           transform: translateX(-50%);
-           width: 110px;
-           height: 55px;
-           border: 8px solid #d9d9d9;
-           border-bottom: none;
-           border-radius: 55px 55px 0 0;
-       }
-       .logo {
-           position: absolute;
-           top: 175px;
-           width: 100%;
-           text-align: center;
-           font-size: 34px;
-           font-weight: 700;
-           color: #14863b;
-           letter-spacing: -0.5px;
-       }
-
-       /* Zaprite embed */
-       iframe {
-           display: block;
-           border: none;
-           width: 100%;
-       }
-   </style>
+      /* Zaprite embed */
+      iframe {
+          display: block;
+          border: none;
+          width: 100%;
+      }
+  </style>
 </head>
 <body>
 
-   <header>
-       <h1>[ thinkmachine.studio ]</h1>
+  <header>
+      <h1>[ thinkmachine.studio ]</h1>
 
-       <p class="nav">
-           [<a href="#projects">projects</a>]
-           [<a href="#about">about</a>]
-           [<a href="#contact">contact</a>]
-           [<a href="#shop">shop</a>]
-       </p>
-   </header>
+      <p class="nav">
+          [<a href="#projects">projects</a>]
+          [<a href="#about">about</a>]
+          [<a href="#contact">contact</a>]
+          [<a href="#shop">shop</a>]
+      </p>
+  </header>
 
-   <hr class="nav-rule">
+  <hr class="nav-rule">
 
-   <main>
-       <div id="projects" class="page active">
-           <h2>projects</h2>
-           <p><a href="https://yardsale.exchange/">yardsale.exchange</a> – Local classifieds on Nostr</p>
-       </div>
+  <main>
+      <div id="projects" class="page active">
+          <h2>projects</h2>
+          <p><a href="https://yardsale.exchange/">yardsale.exchange</a> – Local classifieds on Nostr</p>
+      </div>
 
-       <div id="about" class="page">
-           <h2>about</h2>
-           <p>A place for my ideas.</p>
-       </div>
+      <div id="about" class="page">
+          <h2>about</h2>
+          <p>A place for my ideas.</p>
+      </div>
 
-       <div id="contact" class="page">
-           <h2>contact</h2>
-           <p>Email: <a href="mailto:hello@thinkmachine.studio">hello@thinkmachine.studio</a></p>
-           <p>Nostr: pat@primal.net</p>
-       </div>
+      <div id="contact" class="page">
+          <h2>contact</h2>
+          <p>Email: <a href="mailto:hello@thinkmachine.studio">hello@thinkmachine.studio</a></p>
+          <p>Nostr: pat@primal.net</p>
+      </div>
 
-       <div id="shop" class="page">
-           <h2>shop</h2>
+      <div id="shop" class="page">
+          <h2>shop</h2>
 
-           <div class="product-card" id="tshirt-card">
-               <div class="card-preview">
-                   <div class="mockup-wrap">
-                       <div class="tshirt">
-                           <div class="collar"></div>
-                           <div class="logo">thinkmachine.studio</div>
-                       </div>
-                   </div>
-                   <div class="card-meta">
-                       <p><strong>thinkmachine.studio tee</strong></p>
-                       <p>\$25.00</p>
-                       <p class="card-hint">click to expand</p>
-                   </div>
-               </div>
+          <div class="product-card" id="tshirt-card">
+              <div class="card-preview">
+                  <img src="https://i.postimg.cc/tgvf9zPz/tshirt.png" alt="thinkmachine.studio t-shirt">
+                  <div class="card-meta">
+                      <p><strong>thinkmachine.studio tee</strong></p>
+                      <p>\$25.00</p>
+                      <p class="card-hint">click to expand</p>
+                  </div>
+              </div>
 
-               <div class="card-body">
-                   <div class="mockup-wrap">
-                       <div class="tshirt">
-                           <div class="collar"></div>
-                           <div class="logo">thinkmachine.studio</div>
-                       </div>
-                   </div>
+              <div class="card-body">
+                  <img src="https://i.postimg.cc/tgvf9zPz/tshirt.png" alt="thinkmachine.studio t-shirt">
 
-                   <iframe 
-                       src="https://pay.zaprite.com/pl_XacOITd6fr" 
-                       width="100%" 
-                       height="700" 
-                       frameborder="0" 
-                       title="Zaprite Payment Checkout" 
-                       loading="lazy" 
-                       allow="payment; clipboard-write">
-                   </iframe>
-               </div>
-           </div>
-       </div>
-   </main>
+                  <iframe 
+                      src="https://pay.zaprite.com/pl_XacOITd6fr" 
+                      width="100%" 
+                      height="700" 
+                      frameborder="0" 
+                      title="Zaprite Payment Checkout" 
+                      loading="lazy" 
+                      allow="payment; clipboard-write">
+                  </iframe>
+              </div>
+          </div>
+      </div>
+  </main>
 
-   <div class="footer-wrap">
-       <hr class="footer-rule">
-       <p id="last-updated"></p>
-   </div>
+  <div class="footer-wrap">
+      <hr class="footer-rule">
+      <p id="last-updated"></p>
+  </div>
 
-   <script>
-       function showPage() {
-           var id = window.location.hash.slice(1) || 'projects';
-           document.querySelectorAll('.page').forEach(function(el) {
-               el.classList.remove('active');
-           });
-           var target = document.getElementById(id);
-           if (target) target.classList.add('active');
+  <script>
+      function showPage() {
+          var id = window.location.hash.slice(1) || 'projects';
+          document.querySelectorAll('.page').forEach(function(el) {
+              el.classList.remove('active');
+          });
+          var target = document.getElementById(id);
+          if (target) target.classList.add('active');
 
-           document.querySelectorAll('.nav a').forEach(function(link) {
-               link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-           });
-       }
-       window.addEventListener('hashchange', showPage);
-       window.addEventListener('DOMContentLoaded', showPage);
+          document.querySelectorAll('.nav a').forEach(function(link) {
+              link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+      }
+      window.addEventListener('hashchange', showPage);
+      window.addEventListener('DOMContentLoaded', showPage);
 
-       // Auto-updating last-modified date
-       function updateFooterDate() {
-           var p = document.getElementById('last-updated');
-           if (!p) return;
-           var d = new Date(document.lastModified);
-           if (isNaN(d.getTime())) {
-               p.textContent = 'Last updated: ' + document.lastModified;
-               return;
-           }
-           var opts = {
-               weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-               hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
-           };
-           p.textContent = 'Last updated on ' + d.toLocaleString('en-US', opts);
-       }
-       updateFooterDate();
+      // Auto-updating last-modified date
+      function updateFooterDate() {
+          var p = document.getElementById('last-updated');
+          if (!p) return;
+          var d = new Date(document.lastModified);
+          if (isNaN(d.getTime())) {
+              p.textContent = 'Last updated: ' + document.lastModified;
+              return;
+          }
+          var opts = {
+              weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+              hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+          };
+          p.textContent = 'Last updated on ' + d.toLocaleString('en-US', opts);
+      }
+      updateFooterDate();
 
-       // Expand/collapse product card
-       document.getElementById('tshirt-card').addEventListener('click', function(e) {
-           // Don't collapse when interacting with the checkout iframe
-           if (e.target.closest('.card-body')) return;
-           this.classList.toggle('expanded');
-       });
-   </script>
+      // Expand/collapse product card
+      document.getElementById('tshirt-card').addEventListener('click', function(e) {
+          // Don't collapse when interacting with the checkout iframe
+          if (e.target.closest('.card-body')) return;
+          this.classList.toggle('expanded');
+      });
+  </script>
 
 </body>
 </html>
